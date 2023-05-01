@@ -3,12 +3,15 @@ package com.example.bmicalculator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import com.example.bmicalculator.databinding.BmiActivityBinding
 
 class bmiActivity : AppCompatActivity() {
 
     private lateinit var binding: BmiActivityBinding
     private lateinit var id: String
+    private lateinit var bmi: BMI
+    private val dbManager = bmiDbManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,18 +28,40 @@ class bmiActivity : AppCompatActivity() {
         binding.heightPicker.minValue = 100
         binding.heightPicker.maxValue = 250
 
-        val  button = findViewById<Button>(binding.bmiButton.id)
+        val  calculateButton = findViewById<Button>(binding.bmiButton.id)
 
-        button.setOnClickListener()
+        calculateButton.setOnClickListener()
         {
             binding.results.text = ""
             binding.healthy.text = ""
 
-            val bmi = calculate()
+            bmi = calculate()
 
             binding.results.text = String.format("Your BMI is: %.2f", bmi.getBMI())
             binding.healthy.text = String.format("Considered: %s", bmi.getHealth())
 
+        }
+
+        val updateButton = findViewById<Button>(binding.updateButton.id)
+
+        updateButton.setOnClickListener()
+        {
+            //we only update if a new BMI has been calculated
+            if (this::bmi.isInitialized)
+            {
+                if(dbManager.insert(bmi) == true)
+                {
+                    Toast.makeText(this, "Inserted!", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else
+            {
+                Toast.makeText(this, "No BMI Calculated!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

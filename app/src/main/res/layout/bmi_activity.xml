@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center">
 
         <TextView
@@ -93,5 +93,12 @@
         android:id="@+id/healthy"
         android:padding="10dp"
         style="@style/TextAppearance.MaterialComponents.Headline4"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Update Current BMI"
+        android:layout_marginTop="10dp"
+        android:id="@+id/updateButton"/>
 
 </LinearLayout>
