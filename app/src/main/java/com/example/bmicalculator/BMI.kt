@@ -1,6 +1,6 @@
 package com.example.bmicalculator
 
-class BMI (private var height: Double, private var weight: Double) {
+class BMI (private var height: Double, private var weight: Double, private val id: Int) {
     private var value: Double
     private var health: String = ""
 
@@ -46,5 +46,10 @@ class BMI (private var height: Double, private var weight: Double) {
     fun getHealth(): String
     {
         return health
+    }
+
+    fun getID(): Int
+    {
+        return id
     }
 }

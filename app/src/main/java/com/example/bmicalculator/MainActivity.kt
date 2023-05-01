@@ -1,12 +1,13 @@
 package com.example.bmicalculator
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.bmicalculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,33 +17,33 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        binding.weightPicker.minValue = 30
-        binding.weightPicker.maxValue = 150
-
-
-        binding.heightPicker.minValue = 100
-        binding.heightPicker.maxValue = 250
-
-        val  button = findViewById<Button>(binding.bmiButton.id)
+        val button = findViewById<Button>(binding.idButton.id)
 
         button.setOnClickListener()
         {
-            binding.results.text = ""
-            binding.healthy.text = ""
+            val id = binding.enterID.text.toString()
+            if (id != "")
+            {
+                if (id.toInt() > 0)
+                {
+                    val intent = Intent(this, bmiActivity::class.java)
 
-            val bmi = calculate()
+                    //passing data to our new activity.
+                    intent.putExtra("id", id)
 
-            binding.results.text = String.format("Your BMI is: %.2f", bmi.getBMI())
-            binding.healthy.text = String.format("Considered: %s", bmi.getHealth())
-
+                    //starting a new activity.
+                    startActivity(intent)
+                }
+                else
+                {
+                    Toast.makeText(this, "Invalid ID!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else
+            {
+                Toast.makeText(this, "ID cannot be empty!", Toast.LENGTH_SHORT).show()
+            }
         }
-    }
 
-    private fun calculate() :BMI
-    {
-        val height = binding.heightPicker.value.toDouble()
-        val weight = binding.weightPicker.value.toDouble()
-
-        return BMI(height, weight)
     }
 }
