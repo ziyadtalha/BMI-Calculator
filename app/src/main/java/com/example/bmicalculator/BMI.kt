@@ -6,24 +6,19 @@ class BMI (private var height: Double, private var weight: Double, private val i
 
     private fun findHealth()
     {
-        if (value < 16.5){
-            health = "Severely Underweight!"
+        if (value < 18.5){
+            health = "Underweight!"
         }
         else{
-            if (value < 18.5){
-                health = "Underweight!"
+            if ((value >= 18.5) && (value <= 24.9)){
+                health = "Healthy!"
             }
             else{
-                if ((value >= 18.5) && (value <= 24.9)){
-                    health = "Healthy!"
+                if ((value >= 25) && (value <= 29.9)){
+                    health = "Overweight!"
                 }
                 else{
-                    if ((value >= 25) && (value <= 29.9)){
-                        health = "Overweight!"
-                    }
-                    else{
-                        health = "Obese!"
-                    }
+                    health = "Obese!"
                 }
             }
         }
